@@ -1,5 +1,6 @@
 //This import makes it so you don't have to type "extends React.Component" for classes... just "extends Component"
 import React, { Component } from 'react';
+import uuid from 'uuid';
 import Header from './components/layout/Header';
 import './App.css';
 import AddTodo from './components/AddTodo';
@@ -11,17 +12,20 @@ class App extends Component {
   state={
     todos: [
       {
-        id: 1,
+      //Generates a random ID using UUID
+        id: uuid.v4(),
         title: 'Take out Trash',
         completed: false
       },
       {
-        id: 2,
+      //Generates a random ID using UUID
+        id: uuid.v4(),
         title: 'Take out The Suze',
         completed: false
       },
       {
-        id: 3,
+      //Generates a random ID using UUID
+        id: uuid.v4(),
         title: 'Take out the cat',
         completed: false
       },
@@ -49,6 +53,19 @@ class App extends Component {
     });
   }
 
+  //Add Todo
+  addTodo = (title) => {
+    const newTodo = {
+      //Generates a random ID using UUID
+      id: uuid.v4(),
+      title,
+      completed: false
+    }
+    this.setState({
+      todos: [...this.state.todos, newTodo]
+    })
+  }
+
   //lifecycle method, required to render the component.
   render() {
     return (
@@ -56,7 +73,7 @@ class App extends Component {
         <div className="container">
           <Header />
           {/* Here you place the name of the imported component with < /> as if its an HTML tag */}
-          <AddTodo />
+          <AddTodo addTodo={ this.addTodo } />
           {/* passed the todos in State to the Todos component, the todos will be placed in the todos.props! */}
           <Todos todos={ this.state.todos } markComplete={ this.markComplete } deleteTodo={ this.deleteTodo } />
         </div>
